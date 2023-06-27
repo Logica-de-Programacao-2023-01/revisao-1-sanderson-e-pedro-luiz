@@ -2,16 +2,16 @@ package main
 
 import (
 	"fmt"
-	"revisao-1/bonus"
-	"revisao-1/q1"
-	"revisao-1/q2"
-	"revisao-1/q3"
-	"revisao-1/q4"
-	"revisao-1/q5"
+	"github.com/revisao-1/bonus"
+	"github.com/revisao-1/q1"
+	"github.com/revisao-1/q2"
+	"github.com/revisao-1/q3"
+	"github.com/revisao-1/q4"
+	"github.com/revisao-1/q5"
 )
 
 func main() {
-	discount, err := q1.CalculateDiscount(100, []float64{10, 20, 30, 40, 50})
+	discount, err := q1.CalculateDiscount(5000, []float64{1000, 2050, 3500, 4000, 5500})
 	fmt.Printf("Q1:\tdiscount: %f,\terr: %v\n", discount, err)
 
 	averageLettersPerWord, err := q2.AverageLettersPerWord("Olá, meu nome é Gopher!")
