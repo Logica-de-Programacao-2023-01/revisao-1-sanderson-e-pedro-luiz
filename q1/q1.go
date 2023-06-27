@@ -1,31 +1,42 @@
 package q1
 
-import "fmt"
+import (
+	"errors"
+)
 
 func CalculateDiscount(currentPurchase float64, purchaseHistory []float64) (float64, error) {
-	var soma float64
-	var contador int
-	var resul float64
-	for _, X := range purchaseHistory {
-		soma += X
-		contador++
+	if currentPurchase <= 0 {
+		return 0, errors.New("Valor da compra inválido")
 	}
-	med := soma / float64(contador)
-	if med > 1000 {
-		resul = currentPurchase * 0.2
-		fmt.Println("O valor do produto final é de: ", resul)
-	} else if soma > 1000 {
-		resul = currentPurchase * 0.1
-		fmt.Println("O valor do desconto do cliente é de 10%: ", resul)
-	} else if soma <= 1000 {
-		resul = currentPurchase * 0.05
-		fmt.Println("O valor do desconto do cliente é de 5%: ", resul)
-	} else if soma <= 500 {
-		resul = currentPurchase * 0.02
-		fmt.Println("O valor do desconto do cliente é de 2%: ", resul)
-	} else if len(purchaseHistory) == 0 {
-		resul = currentPurchase * 0.1
-		fmt.Println("Essa é sua primeira compra, teve um desconto de 10%: ", resul)
+
+	totalCompras := somarCompras(purchaseHistory)
+	mediaCompras := totalCompras / float64(len(purchaseHistory))
+
+	var desconto float64
+
+	if totalCompras > 1000 {
+		desconto = currentPurchase * 0.1
+	} else if totalCompras <= 1000 && totalCompras > 500 {
+		desconto = currentPurchase * 0.05
+	} else if totalCompras <= 500 {
+		desconto = currentPurchase * 0.02
 	}
-	return resul, nil
+
+	if len(purchaseHistory) == 0 {
+		desconto = currentPurchase * 0.1
+	}
+
+	if mediaCompras > 1000 && desconto < currentPurchase*0.2 {
+		desconto = currentPurchase * 0.2
+	}
+
+	return desconto, nil
+}
+
+func somarCompras(compras []float64) float64 {
+	var total float64
+	for _, valor := range compras {
+		total += valor
+	}
+	return total
 }
